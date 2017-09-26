@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="icon_strings">
+        <item name="feed_color_string">&#xf0ca;</item>
+        <item name="scoreboard_color_string">&#xf091;</item>
+        <item name="messages_color_string">&#xf0e5;</item>
+        <item name="games_color_string">&#xf11b;</item>
+        <item name="groups_color_string">&#xf0c0;</item>
+    </string-array>
+</resources>

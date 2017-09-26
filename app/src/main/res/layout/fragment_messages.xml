@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eyalengel.blurdemo.Fragments.MessagesFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/buttons_gray"
+        android:padding="5dp"
+        android:id="@+id/search_bar_wrapper_layout">
+
+        <EditText
+            android:id="@+id/messages_search_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/messages_search_bar"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:hint="@string/search_hint"
+            android:textSize="16sp"
+            android:textAlignment="center"/>
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/message_list_wrapper_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_bar_wrapper_layout"
+        android:paddingRight="24dp"
+        android:paddingLeft="24dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/messages_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

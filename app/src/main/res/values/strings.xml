@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">BLUR Demo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="hello_feed_fragment">Hello Feed fragment</string>
+    <string name="hello_scoreboard_fragment">Hello Scoreboard fragment</string>
+    <string name="hello_messages_fragment">Hello Messages fragment</string>
+    <string name="hello_games_fragment">Hello Games fragment</string>
+    <string name="hello_groups_fragment">Hello Groups fragment</string>
+
+    <string name="quote_hint">Enter status update...</string>
+
+
+    <!-- Awesome Font Icon Strings -->
+    <string name="icon_feed">&#xf0ca;</string>
+    <string name="icon_trophy">&#xf091;</string>
+    <string name="icon_messages">&#xf0e5;</string>
+    <string name="icon_games">&#xf11b;</string>
+    <string name="icon_group">&#xf0c0;</string>
+
+    <string name="icon_plus_square">&#xf196;</string>
+    <string name="icon_quote_right">&#xf10e;</string>
+    <string name="icon_quote_left">&#xf10d;</string>
+    <string name="icon_settings">&#xf013;</string>
+    <string name="icon_search">&#xf002;</string>
+    <string name="search_hint">&#xf002; Search</string>
+    <string name="font_awesome_send_message">&#xf062;</string>
+    <string name="fa_arrow_circle">&#xf0aa;</string>
+    <string name="fa_chevron_left">&#xf053;</string>
+    <string name="fa_lock">&#xf023;</string>
+
+
+    <string name="prizes_n_products_btn_txt"><![CDATA[Prizes &  Products]]></string>
+    <string name="scoreboard_btn_txt">Scoreboard</string>
+    <string name="today_pts_btn_txt">Today\'s Pts Summary</string>
+    <string name="type_message_hint">Type message</string>
+    <string name="fa_arrow_circle_left">&#xf0a8;</string>
+    <string name="fa_chevron_circle_left">&#xf137;</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_feed_name">Eyal Engel</string>
+
+
+</resources>

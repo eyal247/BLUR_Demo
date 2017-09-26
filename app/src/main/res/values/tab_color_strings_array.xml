@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tab_color_strings">
+        <item name="icon_feed">#EC5D53</item>
+        <item name="icon_trophy">#F7AF20</item>
+        <item name="icon_messages">#5AAAE4</item>
+        <item name="icon_heart">#8673BA</item>
+        <item name="icon_group">#35B797</item>
+    </string-array>
+</resources>

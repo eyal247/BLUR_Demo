@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fragment_titles">
+        <item name="feed_title">Feed</item>
+        <item name="scoreboard_title">Scoreboard</item>
+        <item name="messages_title">Messages</item>
+        <item name="games_title">Games</item>
+        <item name="groups_title">Groups</item>
+    </string-array>
+</resources>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:paddingRight="5dp">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/message_imageview"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/default_profile_pic"
+        app:siBorderColor="@color/messages_color"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        app:siBorderWidth="2dp" />
+
+    <RelativeLayout
+        android:id="@+id/messages_row_upper_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/message_imageview"
+        android:layout_toRightOf="@+id/message_imageview">
+
+        <TextView
+            android:id="@+id/messages_username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Kirsten Nelson"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/message_time_ago"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="2m"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/messages_row_upper_lower_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/messages_row_upper_layout"
+        android:layout_toRightOf="@+id/message_imageview"
+        android:layout_toEndOf="@+id/message_imageview">
+
+        <TextView
+            android:id="@+id/messages_preview_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
+            android:maxLines="2"
+            android:textSize="12sp"
+            android:text="Lorem ipsum dolor sit amet pulcher veni fugit altra untumulis sectilim dentori alles klar der kommisar" />
+
+
+        <!-- Change min values to fit different textSize or 4 digit numbers -->
+        <TextView
+            android:id="@+id/unread_single_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="16dp"
+            android:minWidth="16dp"
+            android:maxHeight="16dp"
+            android:layout_centerVertical="true"
+            android:text="654"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textAlignment="center"
+            android:textSize="8sp"
+            android:textColor="@color/white"
+            android:background="@drawable/unread_messages_circle_bg"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+

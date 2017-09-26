@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4BADF8</color>
+    <color name="colorPrimaryDark">#357BB1</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="blur_orange">#F7B01A</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="status_bar_color">#58595B</color>
+
+
+
+    <!-- XML FIles Colors -->
+    <color name="divider">#E6E7E8</color>
+    <color name="text_color">#58595B</color>
+    <color name="side_number_color">#BBBDBF</color>
+    <color name="profile_bg_color">#F2F2F2</color>
+    <color name="round_number_of_messages_color">#2C9C80</color>
+    <color name="pts_titles_color">#FEE4C2</color>
+    <color name="feed_date_textview_border_color">#E6E6E5</color>
+    <color name="feed_quote_icon_color">#BABCBE</color>
+    <color name="feed_quote_text_color">#919495</color>
+    <color name="feed_settings_icon_color">#CCCBCA</color>
+    <color name="circular_image_outer_border_color">#D0D1D2</color>
+    <color name="list_row_image_border_color">#BABCBE</color>
+    <color name="list_row_text_color">#5A5A5D</color>
+    <color name="list_row_time_color">#919495</color>
+    <color name="buttons_gray">#CFD1D2</color>
+    <color name="online_green_color">#4BCD00</color>
+    <color name="offline_red_color">#ff0000</color>
+    <color name="time_stamp_color">#929497</color>
+    <color name="send_message_button_color">#ABB2BD</color>
+    <color name="send_message_option_button_color">#ABB2BD</color>
+
+
+
+    <!-- TAB ICONS COLORS -->
+    <color name="feed_color">#EC5D53</color>
+    <color name="scoreboard_color">#F7AF20</color>
+    <color name="messages_color">#5AAAE4</color>
+    <color name="games_color">#8673BA</color>
+    <color name="groups_color">#35B797</color>
+
+
+</resources>

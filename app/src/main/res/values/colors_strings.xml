@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="colorPrimary">#4BADF8</string>
+    <string name="colorPrimaryDark">#357BB1</string>
+    <string name="colorAccent">#FF4081</string>
+    <string name="blur_orange">#F7B01A</string>
+    <string name="white">#ffffff</string>
+    <string name="black">#000000</string>
+
+    <string name="divider">#E6E7E8</string>
+    <string name="text_color">#58595B</string>
+    <string name="side_number_color">#BBBDBF</string>
+    <string name="profile_bg_color">#F2F2F2</string>
+    <string name="round_number_of_messages_color">#2C9C80</string>
+    <string name="pts_titles_color">#FEE4C2</string>
+    <string name="feed_date_textview_border_color">#E6E6E5</string>
+    <string name="feed_quote_icon_color">#BABCBE</string>
+    <string name="feed_quote_text_color">#919495</string>
+    <string name="feed_settings_icon_color">#CCCBCA</string>
+    <string name="circular_image_outer_border_color">#D0D1D2</string>
+    <string name="list_row_image_border_color">#BABCBE</string>
+    <string name="list_row_text_color">#5A5A5D</string>
+    <string name="list_row_time_color">#919495</string>
+    <string name="buttons_gray">#CFD1D2</string>
+
+
+
+    <!-- TAB ICONS COLORS -->
+    <string name="feed_color">#EC5D53</string>
+    <string name="scoreboard_color">#F7AF20</string>
+    <string name="messages_color">#5AAAE4</string>
+    <string name="games_color">#8673BA</string>
+    <string name="groups_color">#35B797</string>
+
+</resources>
