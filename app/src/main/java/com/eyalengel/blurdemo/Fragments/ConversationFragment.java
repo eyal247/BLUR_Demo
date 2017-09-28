@@ -1,3 +1,4 @@
+
 package com.eyalengel.blurdemo.Fragments;
 
 
@@ -79,7 +80,7 @@ public class ConversationFragment extends Fragment {
         context = getActivity().getApplicationContext();
 
         setHasOptionsMenu(true);
-        setMyActionBar();
+        setFragmentActionBar();
         getUIComponents();
         setActionBarComponents();
         setUIComponentsTypeface();
@@ -116,9 +117,6 @@ public class ConversationFragment extends Fragment {
         Typeface typeface = FontHelper.getTypeface(context, FontHelper.FONTAWESOME);
         sendButton.setTypeface(typeface);
         messageLeftArrow.setTypeface(typeface);
-//        backButtonIcon.setTypeface(typeface);
-        backIcon.setBackground(new IconDrawable(context, FontAwesomeIcons.fa_chevron_circle_left)
-                .colorRes(R.color.white));
     }
 
     private void setRecyclerView() {
@@ -157,11 +155,11 @@ public class ConversationFragment extends Fragment {
             onlineDot.setBackgroundResource(R.drawable.offline_background);
     }
 
-    private void setMyActionBar() {
-        ((MainActivity)getActivity()).showActionBar();
-        ((MainActivity)getActivity()).setActionbarCustomView(R.layout.custom_conversation_action_bar);
-        ((MainActivity)getActivity()).setActionBarBackgroundColor(MESSAGES_TAB_INDEX);
-        ((MainActivity)getActivity()).showActionbarBackButton(false);
+    private void setFragmentActionBar() {
+        ((MainActivity) getActivity()).showActionBar();
+        ((MainActivity) getActivity()).setActionbarCustomView(R.layout.custom_conversation_action_bar);
+        ((MainActivity) getActivity()).setActionBarBackgroundColor(MESSAGES_TAB_INDEX);
+        ((MainActivity) getActivity()).showActionbarBackButton(false);
     }
 
     private void setActionBarComponents() {
@@ -170,7 +168,8 @@ public class ConversationFragment extends Fragment {
         setOnlineDot(isOtherUserOnline);
         imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic));
         usernameTV.setText(getFirstName());
-//        backButtonIcon.setText(getResources().getString(R.string.fa_arrow_circle_left));
+        backIcon.setBackground(new IconDrawable(context, FontAwesomeIcons.fa_chevron_circle_left)
+                .colorRes(R.color.white).sizeDp(MENU_ITEM_ICON_SIZE_DP));
     }
 
     private String getFirstName() {
@@ -183,7 +182,6 @@ public class ConversationFragment extends Fragment {
     private void getUIComponents() {
         customActionBarLayout = (RelativeLayout) getConversationActionBarView();
 
-
         backIcon = (IconButton) customActionBarLayout.getChildAt(0);
         onlineDot = (TextView) customActionBarLayout.getChildAt(1);
         imageView = (CircularImageView) customActionBarLayout.getChildAt(2);
@@ -193,13 +191,12 @@ public class ConversationFragment extends Fragment {
         sendButton = (TextView) myView.findViewById(R.id.send_message_button_tv);
         messageLeftArrow = (TextView) myView.findViewById(R.id.conversation_arrow_left_tv);
         typingArea = (EditText) myView.findViewById(R.id.message_edittext);
-//        backIcon = (IconButton)findViewById(R.id.conversation_back_button_icon);
     }
 
     public View getConversationActionBarView() {
-        Window window = ((MainActivity)getActivity()).getWindow();
+        Window window = ((MainActivity) getActivity()).getWindow();
         View v = window.getDecorView();
-        int resId = getResources().getIdentifier("conversation_actionbar_container", "id", ((MainActivity)getActivity()).getPackageName());
+        int resId = getResources().getIdentifier("conversation_actionbar_container", "id", ((MainActivity) getActivity()).getPackageName());
         return v.findViewById(resId);
     }
 
@@ -210,8 +207,8 @@ public class ConversationFragment extends Fragment {
         inflater.inflate(R.menu.conversation_menu, menu);
         menu.findItem(R.id.action_conversation_info)
                 .setIcon(new IconDrawable(context, FontAwesomeIcons.fa_info_circle)
-                .colorRes(R.color.white)
-                .sizeDp(MENU_ITEM_ICON_SIZE_DP));
+                        .colorRes(R.color.white)
+                        .sizeDp(MENU_ITEM_ICON_SIZE_DP));
 
     }
 
@@ -316,5 +313,17 @@ public class ConversationFragment extends Fragment {
         long millis = date.getTime();
 
         return millis;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (OnFragmentInteractionListener)context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 }

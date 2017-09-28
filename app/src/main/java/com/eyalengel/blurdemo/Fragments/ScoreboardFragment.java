@@ -57,6 +57,7 @@ public class ScoreboardFragment extends Fragment {
         mainView = inflater.inflate(R.layout.fragment_scoreboard, container, false);
         context = getActivity().getApplicationContext();
         selectedButton = SCOREBOARD_BUTTON;
+        setFragmentActionBar();
         getUIComponents();
         setButtonsListeners();
         return mainView;
@@ -169,7 +170,7 @@ public class ScoreboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setFragmentActionBar();
+//        setFragmentActionBar();
         scoreboardRowsData = new ArrayList<>();
         setRecyclerView();
     }

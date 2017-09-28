@@ -112,7 +112,7 @@ public class MainActivity extends MyActionBarActivity implements OnFragmentInter
         iconTV.setTextColor(Color.parseColor(WHITE));
         gdIcon = (GradientDrawable) iconTV.getBackground();
         gdIcon.setColor(Color.parseColor(tabColorStrings.get(tabIndex)));
-        gdIcon.setStroke(NO_STROKE, Color.parseColor(tabColorStrings.get(tabIndex)));
+        gdIcon.setStroke(BADGE_STROKE_WIDTH, Color.parseColor(tabColorStrings.get(tabIndex)));
     }
 
 
@@ -222,15 +222,26 @@ public class MainActivity extends MyActionBarActivity implements OnFragmentInter
 
     private void setActionBarInFragment(Bundle args) {
         String fragmentTitle = args.getString("fragment_title");
-        if (fragmentTitle.equals(FEED_STR))
-            hideActionBar();
-        else {
-            showActionBar();
-            setActionBarTitle(fragmentTitle, this);
-            setActionBarBackgroundColor(args.getInt("fragment_tab_index"));
-        }
 
+        setCustomActionBar();
         changeStatuBarColor(R.color.status_bar_color);
+
+        switch(fragmentTitle){
+            case FEED_STR: //remove this case if want to show actionbar in Feed fragment
+                hideActionBar();
+                break;
+            case CONVERSATIONS_STR:
+                showActionBar();
+                setActionbarCustomView(R.layout.custom_conversation_action_bar);
+                setActionBarBackgroundColor(MESSAGES_TAB_INDEX);
+                showActionbarBackButton(false);
+                break;
+            default:
+                showActionBar();
+                setActionBarTitle(fragmentTitle, this);
+                setActionBarBackgroundColor(args.getInt("fragment_tab_index"));
+                break;
+        }
     }
 
     private void switchToConversationFragment(Bundle bundle) {

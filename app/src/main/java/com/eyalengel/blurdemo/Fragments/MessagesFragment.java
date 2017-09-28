@@ -2,7 +2,6 @@ package com.eyalengel.blurdemo.Fragments;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -11,6 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,10 +43,11 @@ public class MessagesFragment extends Fragment {
 
     private Context context;
     private View mainView;
-    private MainActivity parentActivity;
     private EditText searchBar;
     private RecyclerView messagesRecyclerView;
     private ArrayList<MessagesRow> messagesListData;
+    private ArrayList<MessagesRow> tempMessagesList;
+    private ArrayList<MessagesRow> filteredMessages;
     private MessagesListAdapter myAdapter;
     private OnFragmentInteractionListener mListener;
 
@@ -57,7 +60,8 @@ public class MessagesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mainView =  inflater.inflate(R.layout.fragment_messages, container, false);
+        mainView = inflater.inflate(R.layout.fragment_messages, container, false);
+        setFragmentActionBar();
         context = getActivity().getApplicationContext();
         setHasOptionsMenu(true);
         getUIComponents();
@@ -84,6 +88,45 @@ public class MessagesFragment extends Fragment {
             }
 
         });
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                Toast.makeText(getActivity(), "Text Changed", Toast.LENGTH_SHORT).show();
+                filteredMessages.clear();
+                if(s.length() == 0)
+                    myAdapter.notifyDataSetChanged();
+                else {
+                    for (MessagesRow msgRow : messagesListData) {
+                        if (msgRow.getMsgPreview().toLowerCase().contains(s)) {
+                            filteredMessages.add(msgRow);
+                        }
+                    }
+                    myAdapter.filterSearchedMessages(filteredMessages);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+
+        searchBar.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_DEL) {
+                    messagesListData.clear();
+                    messagesListData.addAll(tempMessagesList);
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -100,7 +143,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_create_new_message){
+        if (id == R.id.action_create_new_message) {
             //Todo createNewMessage();
             Toast.makeText(context, "Create New Message", Toast.LENGTH_SHORT).show();
             return true;
@@ -112,30 +155,36 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = (OnFragmentInteractionListener)context;
+        mListener = (OnFragmentInteractionListener) context;
 //        parentActivity.showActionBar();
     }
 
     private void getUIComponents() {
-        searchBar = (EditText)mainView.findViewById(R.id.messages_search_edittext);
+        searchBar = (EditText) mainView.findViewById(R.id.messages_search_edittext);
         searchBar.setHint(R.string.search_hint);
         searchBar.setCursorVisible(false);
         Typeface typeface = FontHelper.getTypeface(context, FontHelper.FONTAWESOME);
         searchBar.setTypeface(typeface);
-        messagesRecyclerView = (RecyclerView)mainView.findViewById(R.id.messages_list);
+        messagesRecyclerView = (RecyclerView) mainView.findViewById(R.id.messages_list);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setFragmentActionBar();
         messagesListData = new ArrayList<>();
+        filteredMessages = new ArrayList<>();
+        tempMessagesList = new ArrayList<>();
         setRecyclerView();
 
-        if(searchBar != null) {
+        if (searchBar != null) {
             searchBar.setCursorVisible(false);
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     private void setFragmentActionBar() {
@@ -149,7 +198,7 @@ public class MessagesFragment extends Fragment {
 
     private void setRecyclerView() {
 
-        myAdapter = new MessagesListAdapter(messagesListData);
+        myAdapter = new MessagesListAdapter(messagesListData, getContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context.getApplicationContext());
 
         messagesRecyclerView.setHasFixedSize(false);
@@ -187,7 +236,7 @@ public class MessagesFragment extends Fragment {
         String msgPreview = "Lorem ipsum dolor sit amet pulcher veni fugit altra untumulis sectilim dentori alles klar der kommisar";
         Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_profile_pic);
 
-        MessagesRow row = new MessagesRow(bm, "Kirsten", "Nelson", msgPreview, "12m", 1);
+        MessagesRow row = new MessagesRow(bm, "Kirsten", "Nelson", "David king of Israel", "12m", 1);
         messagesListData.add(row);
 
         row = new MessagesRow(bm, "John", "Smith", msgPreview, "1h", 4);
@@ -208,15 +257,16 @@ public class MessagesFragment extends Fragment {
         row = new MessagesRow(bm, "Kelly", "James", msgPreview, "1/2/15", 0);
         messagesListData.add(row);
 
-        row = new MessagesRow(bm, "Oren", "Schindler", msgPreview, "1/2/15", 0);
+        row = new MessagesRow(bm, "Oren", "Schindler", "Hi David how are you?", "1/2/15", 0);
         messagesListData.add(row);
 
-        row = new MessagesRow(bm, "Bill", "Clinton", msgPreview, "1/4/15", 1);
+        row = new MessagesRow(bm, "Bill", "Clinton", "Hi David hoe are you?", "1/4/15", 1);
         messagesListData.add(row);
 
         row = new MessagesRow(bm, "Harry", "Potter", msgPreview, "1/8/15", 0);
         messagesListData.add(row);
 
+        tempMessagesList.addAll(messagesListData);
         myAdapter.notifyDataSetChanged();
     }
 

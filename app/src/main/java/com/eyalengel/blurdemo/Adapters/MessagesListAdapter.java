@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.eyalengel.blurdemo.Model.MessagesRow;
@@ -25,9 +27,13 @@ import static com.eyalengel.blurdemo.Model.AppConstants.SPACE_CHAR;
 public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapter.MyViewHolder> {
 
     private ArrayList<MessagesRow> messagesListRows = new ArrayList<>();
+    private ArrayList<MessagesRow> tempListHolder = new ArrayList<>();
+    private int lastPosition = -1;
+    private Context context;
 
-    public MessagesListAdapter(ArrayList<MessagesRow> messagesListRows) {
+    public MessagesListAdapter(ArrayList<MessagesRow> messagesListRows, Context context) {
         this.messagesListRows = messagesListRows;
+        this.context = context;
     }
 
     @Override
@@ -46,13 +52,47 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
         holder.timeAgoTV.setText(row.getMsgTimeAgo());
         if(row.getNumOfUnreadMsgs() <= NO_UNREAD_MESSAGES)
             holder.numOfUnreadMsgsTV.setVisibility(View.GONE);
-        else
+        else {
             holder.numOfUnreadMsgsTV.setText(row.getNumOfUnreadMsgs() + "");
+            holder.numOfUnreadMsgsTV.setVisibility(View.VISIBLE);
+        }
+
+        setAnimation(holder.itemView, position);
+    }
+
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override
     public int getItemCount() {
         return messagesListRows.size();
+    }
+
+    public void filterSearchedMessages(ArrayList<MessagesRow> filteredMessages)
+    {
+        tempListHolder.addAll(messagesListRows);
+        messagesListRows.clear();
+        messagesListRows.addAll(filteredMessages);
+
+        notifyDataSetChanged();
+
+    }
+
+    private void returnDataToOriginalList() {
+        messagesListRows.clear();
+        messagesListRows.addAll(tempListHolder);
+        tempListHolder.clear();
+    }
+
+    public void handleEmptySearchBar(){
+        returnDataToOriginalList();
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

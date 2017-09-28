@@ -35,6 +35,7 @@ public class GamesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainView = inflater.inflate(R.layout.fragment_games, container, false);
+        setFragmentActionBar();
         context = getActivity().getApplicationContext();
 
         return mainView;
@@ -64,6 +65,5 @@ public class GamesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setFragmentActionBar();
     }
 }

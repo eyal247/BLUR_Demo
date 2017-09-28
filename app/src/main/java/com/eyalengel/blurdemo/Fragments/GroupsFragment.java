@@ -35,6 +35,7 @@ public class GroupsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainView = inflater.inflate(R.layout.fragment_groups, container, false);
+        setFragmentActionBar();
         context = getActivity().getApplicationContext();
 
         return mainView;
@@ -59,7 +60,6 @@ public class GroupsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setFragmentActionBar();
     }
 
     @Override

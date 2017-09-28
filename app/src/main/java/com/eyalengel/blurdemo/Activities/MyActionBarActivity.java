@@ -42,6 +42,10 @@ public class MyActionBarActivity extends AppCompatActivity {
         actionBar.setTitle(title);
     }
 
+    public void restoreOriginalActionBar() {
+        actionBar.setDisplayShowCustomEnabled(false);
+    }
+
     public void showActionbarBackButton(boolean show) {
         actionBar.setDisplayHomeAsUpEnabled(show);
     }

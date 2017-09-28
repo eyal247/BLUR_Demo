@@ -36,6 +36,7 @@ public class AppConstants {
     public static final String FEED_STR = "FEED";
     public static final String SCOREBOARD_STR = "SCOREBOARD";
     public static final String MESSAGES_STR = "MESSAGES";
+    public static final String CONVERSATIONS_STR = "CONVERSATIONS";
     public static final String GAMES_STR = "GAMES";
     public static final String GROUPS_STR = "GROUPS";
     public static final String EMPTY_STRING = "";
