@@ -1,6 +1,7 @@
 package com.eyalengel.blurdemo.Fragments;
 
 
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -29,6 +31,7 @@ import com.eyalengel.blurdemo.Model.MessagesRow;
 import com.eyalengel.blurdemo.R;
 import com.eyalengel.blurdemo.Utils.DividerItemDecoration;
 import com.eyalengel.blurdemo.Utils.FontHelper;
+import com.eyalengel.blurdemo.Utils.RecyclerItemTouchHelper;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
@@ -39,7 +42,7 @@ import static com.eyalengel.blurdemo.Model.AppConstants.*;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessagesFragment extends Fragment {
+public class MessagesFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private Context context;
     private View mainView;
@@ -206,29 +209,33 @@ public class MessagesFragment extends Fragment {
         messagesRecyclerView.setLayoutManager(mLayoutManager);
         messagesRecyclerView.addItemDecoration(new DividerItemDecoration(context));
         messagesRecyclerView.setAdapter(myAdapter);
+        setRecyclerViewSwipeListener();
         setRecyclerViewTouchListener();
 
         insertMessagesDataToList();
+    }
+
+    private void setRecyclerViewSwipeListener() {
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(messagesRecyclerView);
     }
 
     private void setRecyclerViewTouchListener() {
         messagesRecyclerView.addOnItemTouchListener(new MessagesListAdapter.RecyclerTouchListener(context, messagesRecyclerView, new MessagesListAdapter.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-//               when message row is clicked, launch full chat fragment
+                //when message row is clicked, launch full chat fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("action", "switch_to_conversation_fragment");
                 bundle.putString("other_user_first_name", messagesListData.get(position).getUserFirstName());
 
                 mListener.onFragmentInteraction(bundle);
-
             }
 
             @Override
             public void onLongClick(View view, int position) {
 
             }
-
         }));
     }
 
@@ -277,4 +284,19 @@ public class MessagesFragment extends Fragment {
     }
 
 
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof MessagesListAdapter.MyViewHolder) {
+            // get the removed item name to display it in snack bar
+            String name = messagesListData.get(viewHolder.getAdapterPosition()).getUserFirstName();
+
+            // backup of removed item for undo purpose
+            final MessagesRow row = messagesListData.get(viewHolder.getAdapterPosition());
+            final int deletedIndex = viewHolder.getAdapterPosition();
+
+            // remove the item from recycler view
+            myAdapter.removeItem(viewHolder.getAdapterPosition());
+
+        }
+    }
 }

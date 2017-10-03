@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eyalengel.blurdemo.Model.MessagesRow;
@@ -84,20 +85,10 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
 
     }
 
-    private void returnDataToOriginalList() {
-        messagesListRows.clear();
-        messagesListRows.addAll(tempListHolder);
-        tempListHolder.clear();
-    }
-
-    public void handleEmptySearchBar(){
-        returnDataToOriginalList();
-        notifyDataSetChanged();
-    }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public CircularImageView userImageView;
         public TextView userNameTV, msgPreviewTV, timeAgoTV, numOfUnreadMsgsTV;
+        public RelativeLayout foreGroundView, backGroundView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -106,7 +97,15 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
             msgPreviewTV = (TextView) itemView.findViewById(R.id.messages_preview_message);
             timeAgoTV = (TextView) itemView.findViewById(R.id.message_time_ago);
             numOfUnreadMsgsTV = (TextView) itemView.findViewById(R.id.unread_single_message);
+            foreGroundView = (RelativeLayout)itemView.findViewById(R.id.message_row_foreground_view);
+            backGroundView = (RelativeLayout)itemView.findViewById(R.id.message_row_background_view);
         }
+    }
+
+    public void removeItem(int position){
+        messagesListRows.remove(position);
+
+        notifyItemRemoved(position);
     }
 
     /* ------------------------- */

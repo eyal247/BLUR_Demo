@@ -10,17 +10,23 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
  */
 
 
-// Check internet connection, initialize Facebook SDK, write exceptions to log file, keep LruBitmapCache
+// Check internet connection, initialize Facebook SDK, write exceptions to log file, keep LruBitmapCache, Volley Methods
 public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
 
+//    private RequestQueue mRequestQueue; add when adding Volley Library
+
+    private static AppController mInstance;
+
     @Override
     public void onCreate() {
         super.onCreate();
-
+        mInstance = this;
         Iconify.with(new FontAwesomeModule());
     }
 
-
+    public static synchronized AppController getInstance() {
+        return mInstance;
+    }
 }

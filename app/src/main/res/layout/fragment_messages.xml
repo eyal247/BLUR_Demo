@@ -31,9 +31,7 @@
         android:id="@+id/message_list_wrapper_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search_bar_wrapper_layout"
-        android:paddingRight="24dp"
-        android:paddingLeft="24dp">
+        android:layout_below="@+id/search_bar_wrapper_layout">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/messages_list"

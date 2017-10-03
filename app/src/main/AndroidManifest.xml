@@ -17,7 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.MyActionBarActivity" />
-        <activity android:name=".Activities.ConversationActivity"></activity>
     </application>
 
 </manifest>
