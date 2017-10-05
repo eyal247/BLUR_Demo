@@ -28,9 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp">
+        android:background="@color/white"
+        android:alpha="0.7">
 
         <RelativeLayout
             android:id="@+id/message_edittext_wrapper"
@@ -38,8 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:background="@drawable/message_rounded_background">
 
             <EditText
@@ -51,11 +52,13 @@
                 android:background="@null"
                 android:layout_centerVertical="true"
                 android:hint="@string/type_message_hint"
-                android:paddingBottom="3dp"
+                android:textAlignment="viewStart"
+                android:gravity="start"
+                android:paddingBottom="5dp"
                 android:paddingEnd="5dp"
-                android:paddingLeft="8dp"
+                android:paddingLeft="10dp"
                 android:paddingRight="8dp"
-                android:paddingStart="8dp"
+                android:paddingStart="10dp"
                 android:paddingTop="3dp"
                 android:layout_marginRight="36dp"
                 android:layout_marginEnd="36dp"

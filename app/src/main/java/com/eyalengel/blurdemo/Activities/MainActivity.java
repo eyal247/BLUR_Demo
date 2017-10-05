@@ -37,10 +37,15 @@ public class MainActivity extends MyActionBarActivity implements OnFragmentInter
     private MessagesFragment messagesFragment;
     private GamesFragment gamesFragment;
     private GroupsFragment groupsFragment;
+    private Fragment currFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+            currFragment = getSupportFragmentManager().getFragment(savedInstanceState, "ConversationFragment");
+        }
         setContentView(R.layout.activity_main);
         getUIComponents();
         initFragmentManager();
@@ -165,6 +170,7 @@ public class MainActivity extends MyActionBarActivity implements OnFragmentInter
     }
 
     private void replaceFragment(Fragment fragment) {
+        currFragment = fragment;
         fragmentManager.beginTransaction().replace(R.id.main_content_frame, fragment).addToBackStack(null).commit();
     }
 
@@ -226,7 +232,7 @@ public class MainActivity extends MyActionBarActivity implements OnFragmentInter
         setCustomActionBar();
         changeStatuBarColor(R.color.status_bar_color);
 
-        switch(fragmentTitle){
+        switch (fragmentTitle) {
             case FEED_STR: //remove this case if want to show actionbar in Feed fragment
                 hideActionBar();
                 break;
@@ -254,4 +260,13 @@ public class MainActivity extends MyActionBarActivity implements OnFragmentInter
                 .addToBackStack(null)
                 .commit();
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        getSupportFragmentManager().putFragment(outState, "ConversationFragment", currFragment);
+    }
+
 }

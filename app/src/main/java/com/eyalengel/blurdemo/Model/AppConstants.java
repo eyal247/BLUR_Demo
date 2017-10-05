@@ -42,5 +42,7 @@ public class AppConstants {
     public static final String EMPTY_STRING = "";
     public static final String SPACE_CHAR = " ";
     public static final String TRIPLE_SPACE = "   ";
+    public static final String MY_DATE_FORMAT = "M/dd/yyyy h:mm aa";
+    public static final String MY_TIME_FORMAT = "h:mm aa";
 
 }

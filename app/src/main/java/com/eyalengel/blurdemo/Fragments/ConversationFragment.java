@@ -6,11 +6,14 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +31,7 @@ import com.eyalengel.blurdemo.Adapters.ConversationAdapter;
 import com.eyalengel.blurdemo.Listeners.OnFragmentInteractionListener;
 import com.eyalengel.blurdemo.Model.MessageBubbleInfo;
 import com.eyalengel.blurdemo.R;
+import com.eyalengel.blurdemo.Utils.DateTimeUtils;
 import com.eyalengel.blurdemo.Utils.FontHelper;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.joanzapata.iconify.IconDrawable;
@@ -79,16 +83,21 @@ public class ConversationFragment extends Fragment {
         myView = inflater.inflate(R.layout.fragment_conversation, container, false);
         context = getActivity().getApplicationContext();
 
+        if (savedInstanceState != null) {
+            conversationMessages = savedInstanceState.getParcelableArrayList("messages_list"); //Restore the fragment's state here
+        }
+
         setHasOptionsMenu(true);
         setFragmentActionBar();
         getUIComponents();
         setActionBarComponents();
         setUIComponentsTypeface();
-        this.lastMsgTime = getLastMsgTime();
+        this.lastMsgTime = getStaticLastMsgTime();
         setListeners();
 
         return myView;
     }
+
 
     private void setListeners() {
 //        backButtonIcon.setOnClickListener(this);
@@ -233,14 +242,6 @@ public class ConversationFragment extends Fragment {
 //        super.onBackPressed();
 //    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        conversationMessages = new ArrayList<>();
-        setRecyclerView();
-    }
-
-
     private void handleSendMessageClick() {
         String msg = typingArea.getText().toString().trim();
         typingArea.setText(EMPTY_STRING);
@@ -251,8 +252,8 @@ public class ConversationFragment extends Fragment {
 
     private void addMessageToConversation(String msgText) {
         Calendar msgTime = Calendar.getInstance();
-
-        MessageBubbleInfo message = new MessageBubbleInfo(msgText, getFormattedDate(context, msgTime.getTimeInMillis()), MSG_TYPE_SELF);
+        String formattedDate = DateTimeUtils.getFormattedDate(context, msgTime.getTimeInMillis(), this.lastMsgTime);
+        MessageBubbleInfo message = new MessageBubbleInfo(msgText, formattedDate, MSG_TYPE_SELF);
         conversationMessages.add(message);
         myAdapter.notifyDataSetChanged();
         conversationRecyclerView.smoothScrollToPosition(myAdapter.getItemCount() - 1);
@@ -264,46 +265,9 @@ public class ConversationFragment extends Fragment {
 //        return;
     }
 
-    private String getTimeStamp() {
-
-        String timeStamp;
-
-        String delegate = "hh:mm aaa";
-        return (String) DateFormat.format(delegate, Calendar.getInstance().getTime());
-
-    }
-
-    public String getFormattedDate(Context context, long msgTimeInMilis) {
-        Calendar msgTime = Calendar.getInstance();
-        Calendar lastMsgTime = Calendar.getInstance();
-
-        msgTime.setTimeInMillis(msgTimeInMilis);
-        lastMsgTime.setTimeInMillis(this.lastMsgTime);
-
-        Calendar now = Calendar.getInstance();
-
-        final String timeFormatString = "hh:mm aa";
-        final String dateTimeFormatString = "EEEE, MMMM d, hh:mm aa";
-        final long HOURS = 60 * 60 * 60;
-
-        if (now.get(Calendar.DATE) == msgTime.get(Calendar.DATE)) {
-            if (msgTime.get(Calendar.HOUR_OF_DAY) - lastMsgTime.get(Calendar.HOUR_OF_DAY) > 1) {
-                this.lastMsgTime = msgTimeInMilis;
-                return "Today @ " + DateFormat.format(timeFormatString, msgTime);
-            } else
-                return EMPTY_STRING;
-        } else if (now.get(Calendar.DATE) - msgTime.get(Calendar.DATE) == 1) {
-            return "Yesterday @ " + DateFormat.format(timeFormatString, msgTime);
-        } else if (now.get(Calendar.YEAR) == msgTime.get(Calendar.YEAR)) {
-            return DateFormat.format(dateTimeFormatString, msgTime).toString();
-        } else {
-            return DateFormat.format("MMMM dd yyyy, h:mm aa", msgTime).toString();
-        }
-    }
-
-    private long getLastMsgTime() {
-        String myDate = "2017/09/25 11:20 am";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm aa");
+    private long getStaticLastMsgTime() {
+        String myDate = "2016/10/03 11:20 am";
+        SimpleDateFormat sdf = new SimpleDateFormat(MY_DATE_FORMAT);
         Date date = null;
         try {
             date = sdf.parse(myDate);
@@ -318,12 +282,34 @@ public class ConversationFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = (OnFragmentInteractionListener)context;
+        mListener = (OnFragmentInteractionListener) context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (conversationMessages == null) {
+            conversationMessages = new ArrayList<>();
+            setRecyclerView();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelableArrayList("messages_list", conversationMessages);
+
     }
 }
